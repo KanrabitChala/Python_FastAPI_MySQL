@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from database import Base
 
 class User(Base):
@@ -13,4 +13,4 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(50))
     content = Column(String(100))
-    user_id =Column(Integer)
+    user_id =Column(Integer, ForeignKey("users.id"))
