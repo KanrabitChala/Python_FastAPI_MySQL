@@ -30,7 +30,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 #===========Post Endpoints===========
 @app.post("/posts/", status_code=status.HTTP_201_CREATED)
 async def create_post(post: PostBase, db: db_dependency):
-    db_post = models.Post(**post.dict())
+    db_post = models.Post(**post.model_dump())#since dict() is deprecated in pydantic v2, we use model_dump() instead
     db.add(db_post)
     db.commit()
 
@@ -52,7 +52,7 @@ async def delete_post(post_id: int, db: db_dependency):
 #===========User Endpoints===========
 @app.post("/users/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(**user.dict())
+    db_user = models.User(**user.dict())#but dict() is deprecated in pydantic v2, we had to use model_dump() instead
     db.add(db_user)
     db.commit()
 
